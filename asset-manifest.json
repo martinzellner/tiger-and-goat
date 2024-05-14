@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/tiger-and-goat/static/css/main.61664334.css",
+    "main.js": "/tiger-and-goat/static/js/main.29fa0653.js",
+    "index.html": "/tiger-and-goat/index.html",
+    "main.61664334.css.map": "/tiger-and-goat/static/css/main.61664334.css.map",
+    "main.29fa0653.js.map": "/tiger-and-goat/static/js/main.29fa0653.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.61664334.css",
+    "static/js/main.29fa0653.js"
+  ]
+}
