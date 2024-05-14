@@ -1,0 +1,25 @@
+/* src/components/GameBoard.css */
+.game-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+
+  }
+  
+  .game-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .game-cell-row {
+    display: flex;
+  }
+  
+  .game-info,
+  .game-manual {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
