@@ -43,7 +43,7 @@ export const useGameState = (gameId) => {
     try {
       const gameRef = ref(db, gameId);
       const docSnap = await get(gameRef);
-
+      console.log(gameId)
       if (docSnap.exists()) {
         console.log("Game exists, loading state.")
         const data = docSnap.val();
