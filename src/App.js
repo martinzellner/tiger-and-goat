@@ -23,8 +23,8 @@ const App = () => {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/:gameId" element={<GameBoard />} />
-          <Route path="/" element={<RedirectToNewGame />} />
+          <Route path="/tiger-and-goat/:gameId" element={<GameBoard />} />
+          <Route path="/tiger-and-goat/" element={<RedirectToNewGame />} />
         </Routes>
       </div>
     </Router>
