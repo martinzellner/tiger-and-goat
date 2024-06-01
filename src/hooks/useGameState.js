@@ -1,10 +1,16 @@
 // src/hooks/useGameState.js
 import { useState, useEffect } from 'react';
 import { initialBoardState, isValidMove, isTigerSurrounded } from '../constants';
+import { db } from '../firebaseConfig';
+import { ref, set, get, onValue } from "firebase/database";
+import { flattenBoard, unflattenBoard } from '../utils/arrayUtils';
 
-export const useGameState = () => {
+
+export const useGameState = (gameId) => {
   const [gameState, setGameState] = useState(initialBoardState);
   const [winner, setWinner] = useState(null);
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkWinner = () => {
@@ -19,6 +25,72 @@ export const useGameState = () => {
 
     checkWinner();
   }, [gameState]);
+
+  const saveGameState = async (state) => {
+    if (loading) {
+      return;
+    }
+    const { board, ...rest } = state;
+    try {
+      const gameRef = ref(db, gameId);
+      await set(gameRef, { board: flattenBoard(board), ...rest });
+    } catch (e) {
+      console.error('Error saving document: ', e);
+    }
+  };
+
+  const loadGameState = async () => {
+    try {
+      const gameRef = ref(db, gameId);
+      const docSnap = await get(gameRef);
+
+      if (docSnap.exists()) {
+        console.log("Game exists, loading state.")
+        const data = docSnap.val();
+        const { board, ...rest } = data;
+        setGameState({ board: unflattenBoard(board), ...rest });
+        setLoading(false);
+
+      } else {
+        console.log('No such game!');
+        // Initialize a new game in Firestore
+        await saveGameState(gameState);
+      }
+    } catch (e) {
+      console.error('Error loading document: ', e);
+    }
+  };
+
+  useEffect(() => {
+    if (gameId) {
+      loadGameState();
+    }
+  }, [gameId]);
+
+  useEffect(() => {
+    saveGameState(gameState);
+    
+  }, [gameState]);
+
+  useEffect(() => {
+    if (gameId) {
+      const gameRef = ref(db, gameId);
+
+      const unsubscribe = onValue(gameRef, (snapshot) => {
+        
+        if (snapshot.exists()) {
+          setLoading(true);
+          const data = snapshot.val();
+          const board = unflattenBoard(data.board);
+          setGameState({ ...data, board });
+          setLoading(false);
+        }
+      });
+
+      return () => unsubscribe();
+    }
+  }, [gameId]);
+
 
   const placeGoat = (row, col) => {
     if (gameState.turn === 'goat' && gameState.goatsToPlace > 0 && gameState.board[row][col] === null) {
@@ -81,5 +153,5 @@ export const useGameState = () => {
     }
   };
 
-  return { gameState, winner, placeGoat, movePiece };
+  return { gameState, placeGoat, movePiece, saveGameState, loading };
 };
