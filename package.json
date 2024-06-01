@@ -56,5 +56,5 @@
       "^.+\\.(js|jsx)$": "babel-jest"
     }
   },
-  "homepage": "https://martinzellner.github.io/tiger-and-goat"
+  "homepage": "https://martinzellner.github.io/tiger-and-goat/"
 }
