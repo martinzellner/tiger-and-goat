@@ -55,6 +55,7 @@ export const useGameState = (gameId) => {
         console.log('No such game!');
         // Initialize a new game in Firestore
         await saveGameState(gameState);
+        setLoading(false);
       }
     } catch (e) {
       console.error('Error loading document: ', e);
