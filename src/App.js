@@ -13,7 +13,7 @@ const RedirectToNewGame = () => {
   useEffect(() => {
     const newGameId = generateGameId();
     
-    navigate(`/${newGameId}`);
+    navigate(`/tiger-and-goat/${newGameId}`);
   }, [navigate]);
   return null;
 };
