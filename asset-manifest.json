@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/tiger-and-goat/static/css/main.f6dab28c.css",
-    "main.js": "/tiger-and-goat/static/js/main.6c539b3c.js",
+    "main.js": "/tiger-and-goat/static/js/main.f80125cc.js",
     "index.html": "/tiger-and-goat/index.html",
     "main.f6dab28c.css.map": "/tiger-and-goat/static/css/main.f6dab28c.css.map",
-    "main.6c539b3c.js.map": "/tiger-and-goat/static/js/main.6c539b3c.js.map"
+    "main.f80125cc.js.map": "/tiger-and-goat/static/js/main.f80125cc.js.map"
   },
   "entrypoints": [
     "static/css/main.f6dab28c.css",
-    "static/js/main.6c539b3c.js"
+    "static/js/main.f80125cc.js"
   ]
 }
