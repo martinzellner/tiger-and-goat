@@ -22,6 +22,7 @@ const GameBoard = () => {
         <Col md={8}>
           <Card>
             <Card.Body>
+              <Card.Title as="h1" className="text-center">Tiger and Goat (Bagh Chal)</Card.Title>
               <Card.Title className="text-center">
                 {gameState.turn === 'tiger' ? '🐅' : '🐐'}'s turn
               </Card.Title>

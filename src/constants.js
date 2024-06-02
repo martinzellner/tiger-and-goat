@@ -1,4 +1,3 @@
-// src/constants.js
 export const initialBoardState = {
     board: [
       ['T', null, null, null, 'T'],
