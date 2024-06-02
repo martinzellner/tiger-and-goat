@@ -1,59 +1,73 @@
-// src/components/GameBoard.js
 import React from 'react';
 import { useParams } from 'react-router-dom';
-
+import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import './GameBoard.css';
 import GameCell from './GameCell';
 import { useGameState } from '../hooks/useGameState';
-import ClipLoader from 'react-spinners/ClipLoader';
 
 const GameBoard = () => {
-
   const { gameId } = useParams();
   const { gameState, placeGoat, movePiece, loading } = useGameState(gameId);
 
   const shareLink = window.location.href;
 
-
-
   return (
-    <div className={`game-container ${loading ? 'loading' : ''}`}>
-      {loading && <div className="loading-overlay">
-        <ClipLoader color={"#ffffff"} loading={loading} size={150} />
-      </div>}
-    <div className="game-board">
-      <div className="row">
-        <div className="col-sm">
-          {gameState.turn === 'tiger' ? '🐅' : '🐐'}'s turn
+    <Container className={`game-container ${loading ? 'loading' : ''} mt-5`}>
+      {loading && (
+        <div className="loading-overlay d-flex justify-content-center align-items-center">
+          <Spinner animation="border" variant="primary" size="lg" />
         </div>
-      </div>
-      <div className='row'>
-      <div className="col-md-3 game-row">
-        {gameState.board.map((row, rowIndex) => (
-          <div className="game-cell-row" key={rowIndex}>
-            {row.map((cell, colIndex) => (
-              <GameCell
-                key={colIndex}
-                row={rowIndex}
-                col={colIndex}
-                piece={cell}
-                movePiece={movePiece}
-                placeGoat={placeGoat}
-                gameState={gameState}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="col-md-4 offset-md-4 game-info">
-        <p>Goats to Place: {gameState.goatsToPlace}</p>
-        <p>Goats Captured: {gameState.goatsCaptured}</p>
-        <p><a href={shareLink} target="_blank" rel="noopener noreferrer">Share this game</a></p>
-
-      </div>
-    </div>
-    </div>
-    </div>
+      )}
+      <Row className="justify-content-center">
+        <Col md={8}>
+          <Card>
+            <Card.Body>
+              <Card.Title className="text-center">
+                {gameState.turn === 'tiger' ? '🐅' : '🐐'}'s turn
+              </Card.Title>
+              <Row>
+                <Col md={8}>
+                  <div className="game-board">
+                    {gameState.board.map((row, rowIndex) => (
+                      <div className="game-cell-row d-flex" key={rowIndex}>
+                        {row.map((cell, colIndex) => (
+                          <GameCell
+                            key={colIndex}
+                            row={rowIndex}
+                            col={colIndex}
+                            piece={cell}
+                            movePiece={movePiece}
+                            placeGoat={placeGoat}
+                            gameState={gameState}
+                          />
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </Col>
+                <Col md={4} className="game-info">
+                  <Card>
+                    <Card.Body>
+                      <Card.Text>Goats to Place: {gameState.goatsToPlace}</Card.Text>
+                      <Card.Text>Goats Captured: {gameState.goatsCaptured}</Card.Text>
+                      <Button
+                        variant="primary"
+                        href={shareLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2"
+                      >
+                        Share this game
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
